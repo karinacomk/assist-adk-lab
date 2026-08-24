@@ -1,4 +1,4 @@
-# Ada Assist ADK Lab
+# Assist ADK Lab
 
 Um laboratório didático para entender **Google ADK + LLM + RAG + Tools + MCP + Observabilidade + Evaluation**, usando TypeScript/Node.js.
 
