@@ -1,0 +1,27 @@
+{
+  "name": "ada-assist-adk-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "adk:web": "adk web src/adk/agent.ts",
+    "adk:run": "adk run src/adk/agent.ts",
+    "typecheck": "tsc --noEmit",
+    "eval": "tsx src/eval.ts"
+  },
+  "dependencies": {
+    "@google/adk": "^1.5.0",
+    "@google/genai": "^2.9.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@google/adk-devtools": "^1.5.0",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.7.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3"
+  }
+}

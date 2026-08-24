@@ -1,0 +1,17 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ada Assist — Dashboard</title><style>
+body{margin:0;background:#f5f7fb;color:#172033;font-family:system-ui}.wrap{max-width:1000px;margin:auto;padding:28px 18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:#fff;border:1px solid #e1e5ed;border-radius:14px;padding:17px}.label{font-size:12px;color:#727d92}.v{font-size:25px;font-weight:750;margin-top:5px}a{color:#3947bf}@media(max-width:700px){.grid{grid-template-columns:1fr 1fr}}</style></head>
+<body><main class="wrap"><a href="/">← voltar</a><h1>Product & AI Metrics</h1><p>Dados desta página são coletados pelo próprio laboratório durante as execuções mock.</p>
+<div class="grid">
+<div class="card"><div class="label">Requests</div><div class="v" id="requests">0</div></div>
+<div class="card"><div class="label">Success rate</div><div class="v" id="success">0%</div></div>
+<div class="card"><div class="label">RAG calls</div><div class="v" id="rag">0</div></div>
+<div class="card"><div class="label">Tool calls</div><div class="v" id="tools">0</div></div>
+</div><div class="card" style="margin-top:14px"><h2>O que cada métrica significa</h2><ul>
+<li><b>Requests:</b> quantas interações passaram pelo agente.</li>
+<li><b>Success rate:</b> proporção de execuções concluídas sem erro.</li>
+<li><b>RAG calls:</b> quantas vezes o agente recuperou conhecimento.</li>
+<li><b>Tool calls:</b> quantas ações/consultas foram executadas.</li>
+</ul></div></main>
+<script>async function r(){const m=await fetch("/api/metrics").then(x=>x.json());requests.textContent=m.requests;success.textContent=(m.successRate*100).toFixed(1)+"%";rag.textContent=m.ragCalls;tools.textContent=m.toolCalls}r();setInterval(r,1500)</script>
+</body></html>

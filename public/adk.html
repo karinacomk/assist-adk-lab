@@ -1,0 +1,24 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ada Assist — ADK explicado</title><style>
+body{margin:0;background:#f5f7fb;color:#172033;font-family:system-ui;padding:28px}.wrap{max-width:900px;margin:auto}
+.card{background:#fff;border:1px solid #e2e6ee;border-radius:15px;padding:20px;margin:14px 0}h1{margin:0 0 8px}h2{font-size:17px}.flow{display:grid;gap:7px}.n{padding:12px;border:1px solid #dfe4ed;border-radius:9px;text-align:center;background:#fafbfe}.a{text-align:center;color:#7e8799}
+code,pre{background:#111827;color:#e8edf5;border-radius:9px}pre{padding:14px;overflow:auto}a{color:#3947bf}
+</style></head><body><main class="wrap">
+<a href="/">← voltar</a><h1>Onde o Google ADK entra</h1>
+<div class="card"><p>Neste laboratório, o ADK é a camada que transforma a definição do agente em uma execução organizada: modelo + instruções + tools + sessão + loop de execução.</p>
+<div class="flow"><div class="n">Usuário</div><div class="a">↓</div><div class="n">Backend</div><div class="a">↓</div><div class="n"><b>LlmAgent</b> — definido pelo Google ADK</div><div class="a">↓</div><div class="n">Gemini</div><div class="a">↓</div><div class="n">FunctionTool / RAG / MCPToolset</div></div></div>
+<div class="card"><h2>O arquivo mais importante</h2><p><code>src/adk/agent.ts</code></p><pre>const agent = new LlmAgent({
+  name: "ada_assist_adk",
+  model: "gemini-2.5-flash",
+  instruction: "...",
+  tools: [
+    knowledgeTool,
+    campaignTool,
+    metricsTool,
+    cancelTool,
+    mcpToolset
+  ]
+});</pre></div>
+<div class="card"><h2>O que o ADK está abstraindo?</h2><ul><li>Runner e loop de execução do agente.</li><li>Chamadas de tools.</li><li>Sessões.</li><li>Eventos de execução.</li><li>Orquestração do fluxo agente → modelo → tool → modelo.</li><li>Integração com MCP através de <code>MCPToolset</code>.</li></ul></div>
+<div class="card"><h2>Importante</h2><p>O modo padrão deste laboratório é mockado. Assim você pode estudar a arquitetura sem consumir Gemini. Quando quiser experimentar o ADK de verdade, coloque <code>MOCK_MODE=false</code> e uma <code>GOOGLE_API_KEY</code>.</p></div>
+</main></body></html>

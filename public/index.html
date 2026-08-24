@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ada Assist — ADK Lab</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f7fb;color:#172033;font-family:Inter,system-ui,-apple-system,sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:28px 18px 50px}.head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:18px}
+h1{margin:0;font-size:28px}.sub{margin:7px 0 0;color:#68738a}.badge{padding:7px 10px;border:1px solid #dfe4ee;background:#fff;border-radius:999px;font-size:12px}
+.grid{display:grid;grid-template-columns:1.35fr .8fr;gap:14px}.card{background:#fff;border:1px solid #e1e5ed;border-radius:15px;padding:18px;box-shadow:0 2px 10px rgba(20,30,55,.04)}
+h2{font-size:16px;margin:0 0 13px}.chat{height:420px;overflow:auto;padding:10px;background:#f8f9fc;border-radius:12px;border:1px solid #edf0f5}
+.msg{max-width:82%;padding:11px 13px;border-radius:12px;margin:9px 0;font-size:14px;line-height:1.45}.user{margin-left:auto;background:#4f5bea;color:#fff}.bot{background:#fff;border:1px solid #e4e7ee}
+textarea{width:100%;height:80px;resize:vertical;margin-top:12px;padding:12px;border:1px solid #d9deea;border-radius:10px;font:inherit}
+button{margin-top:8px;background:#4f5bea;color:#fff;border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
+.metric{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric div{border:1px solid #e7eaf1;border-radius:11px;padding:12px}.label{font-size:11px;color:#778096}.value{font-size:21px;font-weight:750;margin-top:4px}
+.arch{display:grid;gap:6px}.node{padding:10px;border:1px solid #dfe4ed;border-radius:9px;text-align:center;font-size:13px;background:#fafbfe}.arrow{text-align:center;color:#8790a3}
+.links{display:flex;gap:8px;margin-top:12px}.links a{color:#3442bd;text-decoration:none;font-size:13px}
+pre{white-space:pre-wrap;max-height:250px;overflow:auto;background:#111827;color:#e9edf5;padding:12px;border-radius:10px;font-size:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="head">
+<div><h1>Ada Assist — Google ADK Lab</h1><p class="sub">Mesmo laboratório anterior, agora com uma implementação real do Google ADK em TypeScript.</p></div>
+<div class="badge">MOCK = sem API paga</div>
+</header>
+
+<div class="grid">
+<section class="card">
+<h2>Chat</h2>
+<div id="chat" class="chat"><div class="msg bot">Olá! Experimente perguntar sobre CTR, uma campanha ou pedir o cancelamento de uma campanha.</div></div>
+<textarea id="input">Qual é a performance da campanha?</textarea>
+<button id="send">Enviar</button>
+<div class="links"><a href="/dashboard.html">Dashboard</a><a href="/adk.html">Como o ADK entra aqui</a></div>
+</section>
+
+<aside class="card">
+<h2>Métricas do laboratório</h2>
+<div class="metric">
+<div><div class="label">Requests</div><div class="value" id="requests">0</div></div>
+<div><div class="label">Success rate</div><div class="value" id="success">0%</div></div>
+<div><div class="label">RAG calls</div><div class="value" id="rag">0</div></div>
+<div><div class="label">Tool calls</div><div class="value" id="tools">0</div></div>
+</div>
+<h2 style="margin-top:18px">Arquitetura</h2>
+<div class="arch">
+<div class="node">👤 Usuário</div><div class="arrow">↓</div>
+<div class="node">🖥️ Frontend</div><div class="arrow">↓</div>
+<div class="node">⚙️ Backend</div><div class="arrow">↓</div>
+<div class="node">🤖 Google ADK — LlmAgent</div><div class="arrow">↓</div>
+<div class="node">🧠 Gemini + RAG + Tools + MCP</div>
+</div>
+</aside>
+</div>
+</main>
+<script>
+const chat=document.getElementById("chat");
+const input=document.getElementById("input");
+function add(text,cls){const d=document.createElement("div");d.className="msg "+cls;d.textContent=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+async function refresh(){
+ const m=await fetch("/api/metrics").then(r=>r.json());
+ requests.textContent=m.requests; success.textContent=(m.successRate*100).toFixed(1)+"%";
+ rag.textContent=m.ragCalls; tools.textContent=m.toolCalls;
+}
+send.onclick=async()=>{
+ const text=input.value.trim(); if(!text)return;
+ add(text,"user"); input.value="";
+ const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text})});
+ const d=await r.json(); add(d.answer || d.error,"bot"); refresh();
+};
+refresh();
+</script>
+</body>
+</html>
