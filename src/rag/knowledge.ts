@@ -1,8 +1,8 @@
 export const documents = [
   {
     id: "ads-produtos",
-    title: "Produtos Globo Ads",
-    text: "Globo Ads oferece soluções de mídia para diferentes objetivos de campanha, incluindo alcance, consideração e conversão."
+    title: "Produtos Ada Ads",
+    text: "Ada Ads oferece soluções de mídia para diferentes objetivos de campanha, incluindo alcance, consideração e conversão."
   },
   {
     id: "ads-ctr",

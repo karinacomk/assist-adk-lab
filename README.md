@@ -55,7 +55,7 @@ LlmAgent
   ├── FunctionTool: consultar_campanha
   ├── FunctionTool: consultar_metricas
   ├── FunctionTool: cancelar_campanha
-  ├── FunctionTool: buscar_conhecimento_globo_ads
+  ├── FunctionTool: buscar_conhecimento_ada_ads
   └── MCPToolset (opcional)
 ```
 

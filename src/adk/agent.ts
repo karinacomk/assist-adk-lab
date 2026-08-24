@@ -22,14 +22,14 @@ import { retrieve } from "../rag/rag.js";
 
 const campaignTool = new FunctionTool({
   name: "consultar_campanha",
-  description: "Consulta o status e os dados de uma campanha Globo Ads.",
+  description: "Consulta o status e os dados de uma campanha Ada Ads.",
   parameters: getCampaignInput,
   execute: async (args) => consultarCampanha(args)
 });
 
 const metricsTool = new FunctionTool({
   name: "consultar_metricas",
-  description: "Consulta métricas de performance de uma campanha Globo Ads.",
+  description: "Consulta métricas de performance de uma campanha Ada Ads.",
   parameters: getMetricsInput,
   execute: async (args) => consultarMetricas(args)
 });
@@ -48,8 +48,8 @@ const cancelTool = new FunctionTool({
  * continua sendo nossa, dentro de src/rag.
  */
 const knowledgeTool = new FunctionTool({
-  name: "buscar_conhecimento_globo_ads",
-  description: "Busca conhecimento relevante na base de documentação do Globo Ads.",
+  name: "buscar_conhecimento_ada_ads",
+  description: "Busca conhecimento relevante na base de documentação do Ada Ads.",
   parameters: z.object({
     query: z.string().describe("Pergunta ou assunto a buscar na documentação")
   }),
@@ -78,15 +78,15 @@ const mcpToolset = mcpUrl
  */
 export const rootAgent = new LlmAgent({
   name: "ada_assist_adk",
-  description: "Assistente de IA para Globo Ads.",
+  description: "Assistente de IA para Ada Ads.",
   model: "gemini-2.5-flash",
   instruction: `
-Você é o Ada Assist, assistente do time comercial do Globo Ads.
+Você é o Ada Assist, assistente do time comercial do Ada Ads.
 
 Seu objetivo é responder perguntas, consultar dados e executar ações com segurança.
 
 Use:
-- buscar_conhecimento_globo_ads para perguntas conceituais/documentação;
+- buscar_conhecimento_ada_ads para perguntas conceituais/documentação;
 - consultar_campanha para dados atuais de campanha;
 - consultar_metricas para performance;
 - cancelar_campanha somente quando o usuário pedir explicitamente.

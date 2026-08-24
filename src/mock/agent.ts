@@ -35,7 +35,7 @@ export async function runMockAgent(message: string) {
     });
 
     if (docs.length) {
-      answer = `Encontrei este contexto na base Globo Ads: ${docs.map(d => d.text).join(" ")}`;
+      answer = `Encontrei este contexto na base Ada Ads: ${docs.map(d => d.text).join(" ")}`;
     } else {
       answer = "No modo mock, não encontrei um contexto específico. Tente perguntar sobre CTR, planejamento ou uma campanha.";
     }
